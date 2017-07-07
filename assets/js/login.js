@@ -25,25 +25,16 @@ $(document).ready(function(){
   btnLogin.addEventListener('click', e => {
     const email = txtEmail.value;
     const password = txtPassword.value;
-    // const auth = firebase.auth();
+    const auth = firebase.auth();
 
   //sign in
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        alert('Wrong password.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
-    });
+    const promise = auth.signInWithEmailAndPassword(email, password);
+    promise.catch(e => console.log(e.message));
 
 
   })
+
 
   // Add signup event
   btnSignUp.addEventListener('click', e => {
@@ -56,7 +47,7 @@ $(document).ready(function(){
     const promise = auth.createUserWithEmailAndPassword(email, password);
     promise.catch(e => console.log(e.message));
 
-    
+
 
   });
 
@@ -75,14 +66,14 @@ $(document).ready(function(){
       redirect();
     }else{
       console.log('not logged in');
-      btnLogout.classList.add('hide');
+      // btnLogout.classList.add('hide');
     }
   });
 
 
   ///function to redirect user to their main page 
   function redirect() {
-    document.location.href ="file:///C:/Users/szell/Desktop/Class/trashie/Project-1/index.html";
+    document.location.href ="index.html";
     }
 
 });
