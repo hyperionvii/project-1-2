@@ -67,11 +67,14 @@
     //updates table with user specific info
 
     database.ref().on("child_added", function(childSnapshot) {
+      tableData.push(new google.maps.LatLng(childSnapshot.val().lat, childSnapshot.val().lng))
       user = firebase.auth().currentUser.email
       if(user === childSnapshot.val().user) {
         updateTable(childSnapshot.val());
       }
     });
+
+
 
     //clicking on save updates the lat and long on html and table.
     $(document).on("click", '#save', function(event) {
@@ -87,8 +90,10 @@
 
       // updateTable();
 
+
       tableData.push(new google.maps.LatLng(latitude, longitude));
-      console.log(tableData);
+
+
       event.preventDefault();
 
       // Creates local "temporary" object for holding User's data
@@ -174,7 +179,7 @@
       time = moment().format("hh:mm:ss");
       user = firebase.auth().currentUser.email;
 
-      updateTable();
+      // updateTable();
 
       var newLocationData = {
           date: date,
@@ -232,6 +237,7 @@
     return tableData;
   };
 
+
   btnLogout.addEventListener('click', e => {
     firebase.auth().signOut();
     redirect()
@@ -241,10 +247,10 @@
     document.location.href ="../../login.html";
   }
 
-  function nullUserRedirect() {
-    user = firebase.auth().currentUser.email
-    if (user === 'null') {
-      alert("User is not loged in!")
-    }
-  }
+  // function nullUserRedirect() {
+  //   user = firebase.auth().currentUser.email
+  //   if (user === 'null') {
+  //     alert("User is not loged in!")
+  //   }
+  // }
 

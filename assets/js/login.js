@@ -25,12 +25,22 @@ $(document).ready(function(){
   btnLogin.addEventListener('click', e => {
     const email = txtEmail.value;
     const password = txtPassword.value;
-    const auth = firebase.auth();
+    // const auth = firebase.auth();
 
   //sign in
 
-    const promise = auth.signInWithEmailAndPassword(email, password);
-    promise.catch(e => console.log(e.message));
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    });
 
 
   })
@@ -46,13 +56,15 @@ $(document).ready(function(){
     const promise = auth.createUserWithEmailAndPassword(email, password);
     promise.catch(e => console.log(e.message));
 
+    
+
   });
 
   //signout
 
-    btnLogout.addEventListener('click', e => {
-    firebase.auth().signOut();
-  });
+  //   btnLogout.addEventListener('click', e => {
+  //   firebase.auth().signOut();
+  // });
 
 
   // realtime listener
